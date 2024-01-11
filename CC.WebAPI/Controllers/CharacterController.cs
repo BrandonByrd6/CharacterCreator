@@ -29,5 +29,12 @@ namespace CC.WebAPI.Controllers
 
             return Ok("Character Created");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllCharacter()
+        {
+            var characters = await _characterService.getAllCharactersAsync();
+            return Ok(characters);
+        }
     }
 }
