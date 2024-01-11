@@ -37,7 +37,8 @@ public class CharacterService : ICharacterService
             Perception = request.Perception,
             Wisdom = request.Wisdom,
             TeamId = request.TeamId,
-            FeatureId = request.FeatureId
+            FeatureId = request.FeatureId,
+            OwnerId = _userId
         };
 
         _dbContext.Characters.Add(entity);
