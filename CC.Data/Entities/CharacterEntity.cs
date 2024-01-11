@@ -5,6 +5,7 @@ namespace CC.Data.Entities;
 
 public class CharacterEntity
 {
+    [Key]
     public int Id { get; set; }
     [Required]
     public string Name { get; set; } = string.Empty;
@@ -29,10 +30,10 @@ public class CharacterEntity
 
     [ForeignKey(nameof(Team))]
     public int TeamId { get; set; }
-    TeamEntity Team { get; set; }
+    TeamEntity Team { get; set; } = null;
 
 
     [ForeignKey(nameof(Feature))]
     public int FeatureId { get; set; }
-    FeatureEntity Feature { get; set; }
+    FeatureEntity Feature { get; set; } = null;
 }
