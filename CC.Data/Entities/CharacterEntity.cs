@@ -27,10 +27,15 @@ public class CharacterEntity
 
     [Required]
     public int Wisdom { get; set; }
+    
+    [Required]
+    [ForeignKey(nameof(Owner))]
+    public int OwnerId { get; set; } 
+    UserEntity Owner {get; set;} = null!;
 
     [ForeignKey(nameof(Team))]
     public int TeamId { get; set; }
-    TeamEntity Team { get; set; } = null;
+    TeamEntity Team { get; set; } = null!;
 
 
     [ForeignKey(nameof(Feature))]

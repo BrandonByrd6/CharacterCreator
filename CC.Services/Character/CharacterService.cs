@@ -2,6 +2,7 @@ using CC.Data;
 using CC.Data.Entities;
 using CC.Models.Character;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace CC.Services.Character;
 
@@ -44,5 +45,26 @@ public class CharacterService : ICharacterService
         if(changes != 1) return false;
 
         return true;
+    }
+
+    public async Task<IEnumerable<CharacterDetail>> getAllCharactersAsync()
+    {
+        List<CharacterDetail> characters = 
+            await _dbContext.Characters.
+            Where(entity => entity.OwnerId == _userId).
+            Select(entity => new CharacterDetail{
+                Id = entity.Id,
+                Name = entity.Name,
+                Strength = entity.Strength,
+                Agility = entity.Agility,
+                Vitatlity = entity.Vitatlity,
+                Intelligence = entity.Intelligence,
+                Perception = entity.Perception,
+                Wisdom = entity.Wisdom,
+                TeamId = entity.TeamId,
+                FeatureId = entity.FeatureId
+        }).ToListAsync();
+
+        return characters;
     }
 }
