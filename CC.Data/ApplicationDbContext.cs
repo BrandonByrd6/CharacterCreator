@@ -12,7 +12,7 @@ public class ApplicationDbContext : IdentityDbContext<UserEntity, IdentityRole<i
 
     DbSet<CharacterEntity> Characters { get; set; } = null!;
     DbSet<FeatureEntity> Features { get; set; } = null!;
-    DbSet<TeamEntity> Teams { get; set; } = null!;
+    public DbSet<TeamEntity> Teams { get; set; } = null!;
 
     // protected override void OnModelCreating(ModelBuilder modelBuilder)
     // {
