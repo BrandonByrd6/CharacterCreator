@@ -10,7 +10,10 @@ public class ApplicationDbContext : IdentityDbContext<UserEntity, IdentityRole<i
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options){}
 
-
+    public DbSet<CharacterEntity> Characters { get; set; } = null!;
+    public DbSet<FeatureEntity> Features { get; set; } = null!;
+    public DbSet<TeamEntity> Teams { get; set; } = null!;
+    
     // protected override void OnModelCreating(ModelBuilder modelBuilder)
     // {
     //     base.OnModelCreating(modelBuilder);
