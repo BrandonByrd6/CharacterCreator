@@ -8,8 +8,11 @@ namespace CC.Data;
 public class ApplicationDbContext : IdentityDbContext<UserEntity, IdentityRole<int>, int>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options){}
+        : base(options) { }
 
+    public DbSet<CharacterEntity> Characters { get; set; } = null!;
+    public DbSet<FeatureEntity> Features { get; set; } = null!;
+    public DbSet<TeamEntity> Teams { get; set; } = null!;
 
     // protected override void OnModelCreating(ModelBuilder modelBuilder)
     // {
