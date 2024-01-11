@@ -25,9 +25,9 @@ namespace CC.WebAPI.Controllers
 
             var response = await _characterService.CreateCharacterAsync(request);
             if (!response)
-                return BadRequest("Could Not Create Post");
+                return BadRequest("Could Not Create Character");
 
-            return Ok("Post Created");
+            return Ok("Character Created");
         }
     }
 }
