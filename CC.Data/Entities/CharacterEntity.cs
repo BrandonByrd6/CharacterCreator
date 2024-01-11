@@ -5,35 +5,34 @@ namespace CC.Data.Entities;
 
 public class CharacterEntity
 {
-    [Key]
     public int Id { get; set; }
     [Required]
     public string Name { get; set; } = string.Empty;
 
     [Required]
-    public int Strength { get; set; }
+    public int strength { get; set; }
 
     [Required]
-    public int Agility { get; set; }
+    public int agility { get; set; }
 
     [Required]
-    public int Vitatlity { get; set; }
+    public int vitatlity { get; set; }
 
     [Required]
-    public int Intelligence { get; set; }
+    public int intelligence { get; set; }
 
     [Required]
-    public int Perception { get; set; }
+    public int perception { get; set; }
 
     [Required]
-    public int Wisdom { get; set; }
+    public int wisdom { get; set; }
 
     [ForeignKey(nameof(Team))]
     public int TeamId { get; set; }
-    TeamEntity Team { get; set; } = null;
+    TeamEntity Team { get; set; }
 
 
     [ForeignKey(nameof(Feature))]
     public int FeatureId { get; set; }
-    FeatureEntity Feature { get; set; } = null;
+    FeatureEntity Feature { get; set; }
 }
