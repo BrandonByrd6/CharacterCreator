@@ -14,15 +14,15 @@ namespace CC.Services.Team
         public TeamService(ApplicationDbContext context,
                             UserManager<UserEntity> userManager,
                             SignInManager<UserEntity> signInManager)
-        {
-            var currentUser = signInManager.Context.User;
-            var userIdClaim = userManager.GetUserId(currentUser);
-            var hasValidId = int.TryParse(userIdClaim, out _userId);
+        {   //! code below causes 500 internal server error when executing. Try again with authenticated user
+            // var currentUser = signInManager.Context.User;
+            // var userIdClaim = userManager.GetUserId(currentUser);
+            // var hasValidId = int.TryParse(userIdClaim, out _userId);
         
-            if(hasValidId == false) 
-            {
-                throw new Exception("Attempted to create team with out Id Claim");
-            }
+            // if(hasValidId == false) 
+            // {
+            //     throw new Exception("Attempted to create team with out Id Claim");
+            // }
 
             _context = context;            
         }
