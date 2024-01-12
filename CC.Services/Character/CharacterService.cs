@@ -95,4 +95,26 @@ public class CharacterService : ICharacterService
 
         return character;
     }
+
+    public async Task<bool> UpdateCharacterAsync(CharacterUpdate request)
+    {
+        CharacterEntity? entity = await _dbContext.Characters.FindAsync(request.Id);
+
+        if(entity?.OwnerId != _userId) 
+            return false;
+        
+        entity.Name = request.Name;
+        entity.Strength = request.Strength;
+        entity.Agility = request.Agility;
+        entity.Vitatlity = request.Vitatlity;
+        entity.Intelligence = request.Intelligence;
+        entity.Perception = request.Perception;
+        entity.Wisdom = request.Wisdom;
+        entity.TeamId = request.TeamId;
+        entity.FeatureId = request.FeatureId;
+
+        int numOfChanges = await _dbContext.SaveChangesAsync();
+
+        return numOfChanges == 1;
+    }
 }
