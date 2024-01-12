@@ -10,4 +10,6 @@ public interface ICharacterService
     Task<CharacterDetail?> getCharacterById(int characterId);
 
     Task<bool> UpdateCharacterAsync(CharacterUpdate request);
+
+    Task<bool> DeleteCharacterAsync(int id);
 }
