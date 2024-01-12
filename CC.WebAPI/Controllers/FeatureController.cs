@@ -27,7 +27,13 @@ namespace CC.WebAPI.Controllers
             var response = await _featureService.CreateFeatureAsync(request);
             if (!response) return BadRequest("Could not create feature");
                 return Ok("Feature successfully created");
-           
+        }
+
+        [HttpGet("{featureId:int}")]
+        public async Task<IActionResult> GetFeatureById([FromRoute] int featureId)
+        {
+            FeatureDetail? detail = await _featureService.GetFeatureByIdAsync(featureId);
+            return detail is not null ? Ok(detail) : NotFound();
         }
     }
 }

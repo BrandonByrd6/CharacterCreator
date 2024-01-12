@@ -6,6 +6,7 @@ using CC.Data;
 using CC.Data.Entities;
 using CC.Models.Feature;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace CC.Services.Feature
 {
@@ -46,6 +47,18 @@ namespace CC.Services.Feature
                 return true;
         }
 
-        
+        public async Task<FeatureDetail?> GetFeatureByIdAsync(int featureId)
+        {
+            FeatureEntity? feature = await _context.Features
+                .FirstOrDefaultAsync(f => 
+                f.Id == featureId && f.OwnerId == _userId);
+
+                return feature is null ? null : new FeatureDetail
+                {
+                    Id = feature.Id,
+                    Name = feature.Name,
+                    Description = feature.Description
+                };
+        }
     }
 }
