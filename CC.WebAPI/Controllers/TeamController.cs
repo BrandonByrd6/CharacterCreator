@@ -44,6 +44,18 @@ namespace CC.WebAPI.Controllers
         public async Task<IActionResult> GetAllTeams(){
             var teams = await _teamService.GetAllTeamsAsync();
             return Ok(teams);
+
+            if (!ModelState.IsValid)    
+            {
+                return BadRequest(ModelState);
+            }
+            var response = await _teamService.CreateTeamAsync(request);
+            if (!response)
+            {
+                return BadRequest("Could not create team");
+            }
+            return Ok("Team created successfully!");
+
         }
     }
 }

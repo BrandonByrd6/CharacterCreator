@@ -5,4 +5,7 @@ public interface ICharacterService
 {
     Task<bool> CreateCharacterAsync(CreateCharacter request);
 
+    Task<IEnumerable<CharacterDetail>> getAllCharactersAsync();
+    
+    Task<CharacterDetail?> getCharacterById(int characterId);
 }

@@ -2,6 +2,7 @@ using CC.Data;
 using CC.Data.Entities;
 using CC.Models.Character;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace CC.Services.Character;
 
@@ -36,7 +37,8 @@ public class CharacterService : ICharacterService
             Perception = request.Perception,
             Wisdom = request.Wisdom,
             TeamId = request.TeamId,
-            FeatureId = request.FeatureId
+            FeatureId = request.FeatureId,
+            OwnerId = _userId
         };
 
         _dbContext.Characters.Add(entity);
@@ -44,5 +46,53 @@ public class CharacterService : ICharacterService
         if(changes != 1) return false;
 
         return true;
+    }
+
+    public async Task<IEnumerable<CharacterDetail>> getAllCharactersAsync()
+    {
+        List<CharacterDetail> characters = 
+            await _dbContext.Characters.
+            Where(entity => entity.OwnerId == _userId).
+            Select(entity => new CharacterDetail{
+                Id = entity.Id,
+                Name = entity.Name,
+                Strength = entity.Strength,
+                Agility = entity.Agility,
+                Vitatlity = entity.Vitatlity,
+                Intelligence = entity.Intelligence,
+                Perception = entity.Perception,
+                Wisdom = entity.Wisdom,
+                TeamId = entity.TeamId,
+                FeatureId = entity.FeatureId
+        }).ToListAsync();
+
+        return characters;
+    }
+
+    public async Task<CharacterDetail?> getCharacterById(int characterId)
+    {
+        CharacterEntity? entity = await _dbContext.Characters.FindAsync(characterId);
+
+        if(entity == null)
+            return null;
+
+        if(entity.OwnerId != _userId)
+            return null;
+
+
+        CharacterDetail character = new(){
+            Id = entity.Id,
+            Name = entity.Name,
+            Strength = entity.Strength,
+            Agility = entity.Agility,
+            Vitatlity = entity.Vitatlity,
+            Intelligence = entity.Intelligence,
+            Perception = entity.Perception,
+            Wisdom = entity.Wisdom,
+            TeamId = entity.TeamId,
+            FeatureId = entity.FeatureId
+        };
+
+        return character;
     }
 }
