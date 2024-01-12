@@ -1,4 +1,5 @@
 using CC.Models.Character;
+using CC.Models.Responses;
 using CC.Services.Character;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -35,6 +36,16 @@ namespace CC.WebAPI.Controllers
         {
             var characters = await _characterService.getAllCharactersAsync();
             return Ok(characters);
+        }
+
+        [HttpGet("{characterId:int}")]
+        public async Task<IActionResult> GetCharacterById(int characterId) {
+            var character = await _characterService.getCharacterById(characterId);
+
+            if(character == null)
+                return BadRequest(new TextResponse("Could not Find a Character with that ID"));
+            
+            return Ok(character);
         }
     }
 }
