@@ -46,6 +46,18 @@ namespace CC.WebAPI.Controllers
             return Ok(teams);
         }
 
+        [HttpPut("Update")]
+        public async Task<IActionResult> UpdateTeamById([FromBody] TeamUpdate request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return await _teamService.UpdateTeamAsync(request)
+                ? Ok("Team updated successfully")
+                : BadRequest("Team could not be updated");
+        }
+
         [HttpDelete("{teamId:int}")]
         public async Task<IActionResult> DeleteTeam([FromRoute] int teamId)
         {
