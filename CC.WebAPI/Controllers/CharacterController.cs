@@ -49,12 +49,21 @@ namespace CC.WebAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdatePost([FromBody] CharacterUpdate request)
+        public async Task<IActionResult> UpdateCharacter([FromBody] CharacterUpdate request)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
             return await _characterService.UpdateCharacterAsync(request) ? Ok("Character Update Successfully") : BadRequest("Character Could not be updated");
+        }
+
+        [HttpPut("/Feature")]
+        public async Task<IActionResult> AddFeatureToCharacter([FromBody] CharacterFeatureAdd request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            return await _characterService.AddFeatureToCharacterAsync(request) ? Ok("Feature added Successfully") : BadRequest("Feature could not be added");
         }
 
         [HttpDelete("{characterId:int}")]

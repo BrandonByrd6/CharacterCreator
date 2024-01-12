@@ -12,4 +12,6 @@ public interface ICharacterService
     Task<bool> UpdateCharacterAsync(CharacterUpdate request);
 
     Task<bool> DeleteCharacterAsync(int id);
+
+    Task<bool> AddFeatureToCharacterAsync(CharacterFeatureAdd request); 
 }
