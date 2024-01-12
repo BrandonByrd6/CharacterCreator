@@ -9,5 +9,7 @@ namespace CC.Services.Team
     public interface ITeamService
     {
         Task<bool> CreateTeamAsync(TeamCreate model);
+        Task<TeamDetail?> GetTeamByIdAsync(int teamId);
+        Task<IEnumerable<TeamDetail>> GetAllTeamsAsync();
     }
 }
