@@ -48,6 +48,17 @@ public class CharacterService : ICharacterService
         return true;
     }
 
+    public async Task<bool> DeleteCharacterAsync(int id)
+    {
+        var characterEntity = await _dbContext.Characters.FindAsync(id);
+
+          if(characterEntity?.OwnerId != _userId) 
+            return false;
+
+        _dbContext.Characters.Remove(characterEntity);
+        return await _dbContext.SaveChangesAsync() == 1;
+    }
+
     public async Task<IEnumerable<CharacterDetail>> getAllCharactersAsync()
     {
         List<CharacterDetail> characters = 

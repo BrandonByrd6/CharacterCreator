@@ -56,5 +56,12 @@ namespace CC.WebAPI.Controllers
 
             return await _characterService.UpdateCharacterAsync(request) ? Ok("Character Update Successfully") : BadRequest("Character Could not be updated");
         }
+
+        [HttpDelete("{characterId:int}")]
+        public async Task<IActionResult> DeteteCharacter([FromRoute] int characterId)
+        {
+            return await _characterService.DeleteCharacterAsync(characterId) ? Ok($"Charcter {characterId} was deleted successfully") 
+                : BadRequest($"Charcter {characterId} was unable to be deleted!");
+        }
     }
 }
