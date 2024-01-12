@@ -9,5 +9,6 @@ namespace CC.Services.Feature
     public interface IFeatureService
     {
         Task<bool> CreateFeatureAsync(FeatureCreate request);
+        Task<FeatureDetail?> GetFeatureByIdAsync(int featureId);
     }
 }
