@@ -44,18 +44,14 @@ namespace CC.WebAPI.Controllers
         public async Task<IActionResult> GetAllTeams(){
             var teams = await _teamService.GetAllTeamsAsync();
             return Ok(teams);
+        }
 
-            if (!ModelState.IsValid)    
-            {
-                return BadRequest(ModelState);
-            }
-            var response = await _teamService.CreateTeamAsync(request);
-            if (!response)
-            {
-                return BadRequest("Could not create team");
-            }
-            return Ok("Team created successfully!");
-
+        [HttpDelete("{teamId:int}")]
+        public async Task<IActionResult> DeleteTeam([FromRoute] int teamId)
+        {
+            return await _teamService.DeleteTeamAsync(teamId)
+                ? Ok($"Team {teamId} was deleted successfully")
+                : BadRequest($"Team {teamId} could not be deleted");
         }
     }
 }

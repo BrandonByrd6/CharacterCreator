@@ -11,5 +11,6 @@ namespace CC.Services.Team
         Task<bool> CreateTeamAsync(TeamCreate model);
         Task<TeamDetail?> GetTeamByIdAsync(int teamId);
         Task<IEnumerable<TeamDetail>> GetAllTeamsAsync();
+        Task<bool> DeleteTeamAsync(int teamId);
     }
 }

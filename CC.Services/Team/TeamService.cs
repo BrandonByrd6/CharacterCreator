@@ -16,10 +16,10 @@ namespace CC.Services.Team
         public TeamService(ApplicationDbContext context,
                             UserManager<UserEntity> userManager,
                             SignInManager<UserEntity> signInManager)
-        {   //! code below causes 500 internal server error when executing. Try again with authenticated user
-            // var currentUser = signInManager.Context.User;
-            // var userIdClaim = userManager.GetUserId(currentUser);
-            // var hasValidId = int.TryParse(userIdClaim, out _userId);
+        {   
+            var currentUser = signInManager.Context.User;
+            var userIdClaim = userManager.GetUserId(currentUser);
+            var hasValidId = int.TryParse(userIdClaim, out _userId);
         
             if(hasValidId == false) 
             {
@@ -71,5 +71,17 @@ namespace CC.Services.Team
             }).ToListAsync();
             return teams;
         }
+
+        public async Task<bool> DeleteTeamAsync(int teamId)
+        {
+            var teamEntity = await _context.Teams.FindAsync(teamId);
+            if (teamEntity?.OwnerId != _userId)
+            {
+                return false;
+            }
+            _context.Teams.Remove(teamEntity);
+            return await _context.SaveChangesAsync() == 1;
+        }
+
     }
 }
