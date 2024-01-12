@@ -68,4 +68,31 @@ public class CharacterService : ICharacterService
 
         return characters;
     }
+
+    public async Task<CharacterDetail?> getCharacterById(int characterId)
+    {
+        CharacterEntity? entity = await _dbContext.Characters.FindAsync(characterId);
+
+        if(entity == null)
+            return null;
+
+        if(entity.OwnerId != _userId)
+            return null;
+
+
+        CharacterDetail character = new(){
+            Id = entity.Id,
+            Name = entity.Name,
+            Strength = entity.Strength,
+            Agility = entity.Agility,
+            Vitatlity = entity.Vitatlity,
+            Intelligence = entity.Intelligence,
+            Perception = entity.Perception,
+            Wisdom = entity.Wisdom,
+            TeamId = entity.TeamId,
+            FeatureId = entity.FeatureId
+        };
+
+        return character;
+    }
 }
