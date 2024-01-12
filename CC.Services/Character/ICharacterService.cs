@@ -8,4 +8,6 @@ public interface ICharacterService
     Task<IEnumerable<CharacterDetail>> getAllCharactersAsync();
     
     Task<CharacterDetail?> getCharacterById(int characterId);
+
+    Task<bool> UpdateCharacterAsync(CharacterUpdate request);
 }

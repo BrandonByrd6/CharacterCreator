@@ -47,5 +47,14 @@ namespace CC.WebAPI.Controllers
             
             return Ok(character);
         }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdatePost([FromBody] CharacterUpdate request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            return await _characterService.UpdateCharacterAsync(request) ? Ok("Character Update Successfully") : BadRequest("Character Could not be updated");
+        }
     }
 }
