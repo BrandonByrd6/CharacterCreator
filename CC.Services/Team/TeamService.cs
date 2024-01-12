@@ -72,6 +72,19 @@ namespace CC.Services.Team
             return teams;
         }
 
+        public async Task<bool> UpdateTeamAsync(TeamUpdate request)
+        {
+            TeamEntity? entity = await _context.Teams.FindAsync(request.Id);
+            if (entity?.OwnerId != _userId)
+            {
+                return false;
+            }   
+            entity.Name = request.Name;
+
+            int numberOfChanges = await _context.SaveChangesAsync();
+            return numberOfChanges == 1;
+        }
+
         public async Task<bool> DeleteTeamAsync(int teamId)
         {
             var teamEntity = await _context.Teams.FindAsync(teamId);
