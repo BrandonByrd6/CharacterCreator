@@ -17,5 +17,4 @@ public interface ICharacterService
 
     Task<bool> AddCharacterToTeamAsync(CharacterTeamAdd request); 
 
-    
 }

@@ -10,19 +10,14 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using CC.Services.Token;
 using Microsoft.OpenApi.Models;
-using CC.Services.Team;
 using CC.Services.Character;
-using CC.Services.Feature;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
-builder.Services.AddScoped<ITeamService, TeamService>();
 builder.Services.AddScoped<ICharacterService, CharacterService>();
-builder.Services.AddScoped<IFeatureService, FeatureService>();
 
 builder.Services.AddHttpContextAccessor();
 

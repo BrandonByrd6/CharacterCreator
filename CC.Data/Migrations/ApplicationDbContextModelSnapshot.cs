@@ -30,35 +30,32 @@ namespace CC.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Agility")
-                        .HasColumnType("int");
-
                     b.Property<int>("FeatureId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Intelligence")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OwnerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Perception")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Strength")
-                        .HasColumnType("int");
-
                     b.Property<int>("TeamId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Vitatlity")
+                    b.Property<int>("agility")
                         .HasColumnType("int");
 
-                    b.Property<int>("Wisdom")
+                    b.Property<int>("intelligence")
+                        .HasColumnType("int");
+
+                    b.Property<int>("perception")
+                        .HasColumnType("int");
+
+                    b.Property<int>("strength")
+                        .HasColumnType("int");
+
+                    b.Property<int>("vitatlity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("wisdom")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -84,9 +81,6 @@ namespace CC.Data.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<int>("OwnerId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.ToTable("Features");
@@ -104,9 +98,6 @@ namespace CC.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
-
-                    b.Property<int>("OwnerId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
