@@ -66,6 +66,15 @@ namespace CC.WebAPI.Controllers
             return await _characterService.AddFeatureToCharacterAsync(request) ? Ok("Feature added Successfully") : BadRequest("Feature could not be added");
         }
 
+        [HttpPut("/Team")]
+        public async Task<IActionResult> AddTeamToCharacter([FromBody] CharacterTeamAdd request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            return await _characterService.AddCharacterToTeamAsync(request) ? Ok("Team added Successfully") : BadRequest("Team could not be added");
+        }
+
         [HttpDelete("{characterId:int}")]
         public async Task<IActionResult> DeteteCharacter([FromRoute] int characterId)
         {

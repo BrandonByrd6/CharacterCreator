@@ -26,6 +26,24 @@ public class CharacterService : ICharacterService
         _dbContext = dbContext;
     }
 
+    public async Task<bool> AddCharacterToTeamAsync(CharacterTeamAdd request)
+    {
+        CharacterEntity? entity = await _dbContext.Characters.FindAsync(request.Id);
+        TeamEntity? teamEntity = await _dbContext.Teams.FindAsync(request.Id);
+
+        if(teamEntity?.OwnerId != _userId)
+            return false;
+
+        if(entity?.OwnerId != _userId) 
+            return false;
+        
+        entity.TeamId = request.TeamId;
+
+        int numOfChanges = await _dbContext.SaveChangesAsync();
+
+        return numOfChanges == 1;
+    }
+
     public async Task<bool> AddFeatureToCharacterAsync(CharacterFeatureAdd request)
     {
         CharacterEntity? entity = await _dbContext.Characters.FindAsync(request.Id);
