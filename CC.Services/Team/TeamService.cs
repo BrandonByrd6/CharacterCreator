@@ -1,7 +1,9 @@
 using CC.Data;
 using CC.Data.Entities;
 using CC.Models.Team;
+using CC.Models.User;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace CC.Services.Team
 {
@@ -14,7 +16,7 @@ namespace CC.Services.Team
         public TeamService(ApplicationDbContext context,
                             UserManager<UserEntity> userManager,
                             SignInManager<UserEntity> signInManager)
-        {
+        {   
             var currentUser = signInManager.Context.User;
             var userIdClaim = userManager.GetUserId(currentUser);
             var hasValidId = int.TryParse(userIdClaim, out _userId);
@@ -31,7 +33,8 @@ namespace CC.Services.Team
         {
             TeamEntity entity = new()
             {
-                Name = model.Name
+                Name = model.Name,
+                OwnerId = _userId
             };
 
             _context.Teams.Add(entity);
@@ -39,5 +42,59 @@ namespace CC.Services.Team
             if(changes != 1) return false;
                 return true;
         }
+
+        public async Task<TeamDetail?> GetTeamByIdAsync(int teamId)
+        {
+            TeamEntity? entity = await _context.Teams.FindAsync(teamId);
+            if (entity is null)
+            {
+                return null;
+            }
+            if (entity.OwnerId != _userId)
+            {
+                return null;
+            }
+            TeamDetail detail = new()
+            {
+                Id = entity.Id,
+                Name = entity.Name
+            };
+            return detail;
+        }
+
+        public async Task<IEnumerable<TeamDetail>> GetAllTeamsAsync()
+        {
+            List<TeamDetail> teams = await _context.Teams.Where(entity => entity.OwnerId == _userId)
+            .Select(entity => new TeamDetail{
+                Id = entity.Id,
+                Name = entity.Name 
+            }).ToListAsync();
+            return teams;
+        }
+
+        public async Task<bool> UpdateTeamAsync(TeamUpdate request)
+        {
+            TeamEntity? entity = await _context.Teams.FindAsync(request.Id);
+            if (entity?.OwnerId != _userId)
+            {
+                return false;
+            }   
+            entity.Name = request.Name;
+
+            int numberOfChanges = await _context.SaveChangesAsync();
+            return numberOfChanges == 1;
+        }
+
+        public async Task<bool> DeleteTeamAsync(int teamId)
+        {
+            var teamEntity = await _context.Teams.FindAsync(teamId);
+            if (teamEntity?.OwnerId != _userId)
+            {
+                return false;
+            }
+            _context.Teams.Remove(teamEntity);
+            return await _context.SaveChangesAsync() == 1;
+        }
+
     }
 }

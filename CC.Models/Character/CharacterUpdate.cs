@@ -1,13 +1,16 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CC.Data.Entities;
 
-public class CharacterEntity
+namespace CC.Models.Character;
+
+public class CharacterUpdate
 {
-    [Key]
-    public int Id { get; set; }
     [Required]
+    public int Id { get; set; }
+
+    [Required]
+    [MinLength(1, ErrorMessage = "Character Name must have at least 1 character")]
+    [MaxLength(254, ErrorMessage = "Character Name can not have more than 254 Characters")]
     public string Name { get; set; } = string.Empty;
 
     [Required]
@@ -27,18 +30,8 @@ public class CharacterEntity
 
     [Required]
     public int Wisdom { get; set; }
-    
-    [Required]
-    [ForeignKey(nameof(Owner))]
-    public int OwnerId { get; set; } 
-    UserEntity Owner {get; set;} = null!;
 
-    [ForeignKey(nameof(Team))]
     public int TeamId { get; set; }
-    TeamEntity Team { get; set; } = null!;
 
-
-    [ForeignKey(nameof(Feature))]
     public int FeatureId { get; set; }
-    FeatureEntity Feature { get; set; } = null;
 }
