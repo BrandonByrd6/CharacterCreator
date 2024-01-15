@@ -74,6 +74,31 @@ namespace CC.Services.Feature
 
             return features;
         }
+
+        public async Task<bool> UpdateFeatureAsync(FeatureUpdate request)
+        {
+            FeatureEntity? entity = await _context.Features.FindAsync(request.Id);
+            if (entity?.OwnerId != _userId)
+            {
+                return false;
+            }
+            entity.Name = request.Name;
+            entity.Description = request.Description;
+
+            int numberOfChanges = await _context.SaveChangesAsync();
+            return numberOfChanges == 1;
+        }
+
+        public async Task<bool> DeleteFeatureAsync(int featureId)
+        {
+            var featureEntity = await _context.Features.FindAsync(featureId);
+            if (featureEntity?.OwnerId != _userId)
+            {
+                return false;
+            }
+            _context.Features.Remove(featureEntity);
+            return await _context.SaveChangesAsync() == 1;
+        }
              
     }
 }

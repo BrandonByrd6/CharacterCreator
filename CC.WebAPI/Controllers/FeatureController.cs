@@ -42,5 +42,24 @@ namespace CC.WebAPI.Controllers
             var features = await _featureService.GetAllFeaturesAsync();
             return Ok(features);
         }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateFeatureById([FromBody] FeatureUpdate request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return await _featureService.UpdateFeatureAsync(request)
+                ? Ok("Feature updates successfully") : BadRequest("Feature could not be updated");
+        }
+
+        [HttpDelete("{featureId:int}")]
+        public async Task<IActionResult> DeleteFeature([FromRoute] int featureId)
+        {
+            return await _featureService.DeleteFeatureAsync(featureId)
+                ? Ok($"Feature {featureId} was deleted successfully")
+                : BadRequest($"Feature {featureId} could not be deleted");
+        }
     }
 }
