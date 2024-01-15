@@ -10,5 +10,6 @@ namespace CC.Services.Feature
     {
         Task<bool> CreateFeatureAsync(FeatureCreate request);
         Task<FeatureDetail?> GetFeatureByIdAsync(int featureId);
+        Task<IEnumerable<FeatureListItem>> GetAllFeaturesAsync();
     }
 }

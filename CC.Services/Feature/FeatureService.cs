@@ -60,5 +60,20 @@ namespace CC.Services.Feature
                     Description = feature.Description
                 };
         }
+
+        public async Task<IEnumerable<FeatureListItem>> GetAllFeaturesAsync()
+        {
+            List<FeatureListItem> features = await _context.Features
+                .Where(entity => entity.OwnerId == _userId)
+                .Select(entity => new FeatureListItem   
+                {
+                    Id = entity.Id,
+                    Name = entity.Name,
+                    Description = entity.Description
+                }).ToListAsync();
+
+            return features;
+        }
+             
     }
 }

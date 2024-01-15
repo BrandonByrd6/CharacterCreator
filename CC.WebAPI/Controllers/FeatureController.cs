@@ -35,5 +35,12 @@ namespace CC.WebAPI.Controllers
             FeatureDetail? detail = await _featureService.GetFeatureByIdAsync(featureId);
             return detail is not null ? Ok(detail) : NotFound();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllFeatures()
+        {
+            var features = await _featureService.GetAllFeaturesAsync();
+            return Ok(features);
+        }
     }
 }
